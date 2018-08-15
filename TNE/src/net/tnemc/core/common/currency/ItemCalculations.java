@@ -248,6 +248,7 @@ public class ItemCalculations {
 
       if(first == -1) {
         ItemStack helmet = player.getInventory().getHelmet();
+        ItemStack offHand = player.getInventory().getItemInOffHand();
         if(helmet != null) {
           int amount = helmet.getAmount();
           if (helmet.isSimilar(stack)) {
@@ -257,6 +258,19 @@ public class ItemCalculations {
             } else {
               helmet.setAmount(amount - left);
               player.getInventory().setHelmet(helmet);
+              left = 0;
+            }
+            return left;
+          }
+        } else if(offHand != null) {
+          int amount = offHand.getAmount();
+          if (offHand.isSimilar(stack)) {
+            if (amount <= left) {
+              left -= amount;
+              player.getInventory().setItemInOffHand(null);
+            } else {
+              offHand.setAmount(amount - left);
+              player.getInventory().setItemInOffHand(offHand);
               left = 0;
             }
             return left;
