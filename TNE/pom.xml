@@ -81,12 +81,8 @@
             <url>http://maven.elmakers.com/repository</url>
         </repository>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>vault-repo</id>
-            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+            <id>sponge</id>
+            <url>https://repo.spongepowered.org/maven</url>
         </repository>
         <repository>
             <id>reserve-repo</id>
@@ -108,27 +104,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.6</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.gmail.nossr50.mcMMO</groupId>
-            <artifactId>mcMMO</artifactId>
-            <version>1.5.00</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.13-pre7-R0.1-SNAPSHOT</version>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/junit/junit -->

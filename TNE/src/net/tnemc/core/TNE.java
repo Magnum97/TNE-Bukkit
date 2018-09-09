@@ -5,7 +5,6 @@ import com.github.tnerevival.TNELib;
 import com.github.tnerevival.core.UpdateChecker;
 import com.github.tnerevival.core.collection.EventList;
 import com.github.tnerevival.core.collection.EventMap;
-import net.milkbowl.vault.economy.Economy;
 import net.tnemc.core.commands.CommandManager;
 import net.tnemc.core.commands.TNECommand;
 import net.tnemc.core.commands.admin.AdminCommand;
@@ -22,9 +21,7 @@ import net.tnemc.core.common.TNEUUIDManager;
 import net.tnemc.core.common.TransactionManager;
 import net.tnemc.core.common.WorldManager;
 import net.tnemc.core.common.account.TNEAccount;
-import net.tnemc.core.common.api.Economy_TheNewEconomy;
 import net.tnemc.core.common.api.IDFinder;
-import net.tnemc.core.common.api.ReserveEconomy;
 import net.tnemc.core.common.api.TNEAPI;
 import net.tnemc.core.common.configurations.MainConfigurations;
 import net.tnemc.core.common.configurations.MessageConfigurations;
@@ -53,7 +50,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.ServicePriority;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -98,8 +94,6 @@ public class TNE extends TNELib {
   private String serverName;
 
   //Economy APIs
-  private Economy_TheNewEconomy vaultEconomy;
-  private ReserveEconomy reserveEconomy;
   private TNEAPI api;
 
   // Files & Custom Configuration Files
@@ -145,17 +139,6 @@ public class TNE extends TNELib {
     getLogger().info("Loading The New Economy with Java Version: " + System.getProperty("java.version"));
     instance = this;
     api = new TNEAPI(this);
-
-    //Initialize Economy Classes
-    if(getServer().getPluginManager().getPlugin("Vault") != null) {
-      vaultEconomy = new Economy_TheNewEconomy(this);
-      setupVault();
-    }
-
-    reserveEconomy = new ReserveEconomy(this);
-    if(getServer().getPluginManager().getPlugin("Reserve") != null) {
-      setupReserve();
-    }
   }
 
   public void onEnable() {
@@ -537,14 +520,6 @@ public class TNE extends TNELib {
     cacheMaps.add(map);
   }
 
-  public Economy_TheNewEconomy vault() {
-    return vaultEconomy;
-  }
-
-  public ReserveEconomy reserve() {
-    return reserveEconomy;
-  }
-
   public static ModuleLoader loader() { return instance().loader; }
 
   public static EconomyManager manager() {
@@ -717,16 +692,6 @@ public class TNE extends TNELib {
       YamlConfiguration config = YamlConfiguration.loadConfiguration(worldsStream);
       worldConfigurations.setDefaults(config);
     }
-  }
-
-  private void setupVault() {
-    getServer().getServicesManager().register(Economy.class, vaultEconomy, this, ServicePriority.Highest);
-    getLogger().info("Hooked into Vault");
-  }
-
-  private void setupReserve() {
-    Reserve.instance().registerProvider(reserveEconomy);
-    getLogger().info("Hooked into Reserve");
   }
 
   public void addWorldManager(WorldManager manager) {
